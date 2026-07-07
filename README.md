@@ -5,6 +5,9 @@ methods (raw attention, attention rollout, Integrated Gradients, and Chefer-styl
 relevance propagation) on a Turkish BERT classifier fine-tuned to predict rights-violation
 outcomes from Turkish Constitutional Court individual-application decisions.
 
+An archived version of this repository (code, results, and a frozen copy of the dataset)
+is deposited at Zenodo: https://doi.org/10.5281/zenodo.21246640
+
 ## Data
 
 The dataset is public and is not redistributed here. It is available on Hugging Face:
