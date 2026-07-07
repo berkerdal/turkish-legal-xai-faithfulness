@@ -1,0 +1,4 @@
+seed,macro_f1,raw_attention,attention_rollout,integrated_gradients,chefer_relevance,random
+42,0.804,0.1298,0.1075,0.2568,0.2794,0.0407
+20,0.808,0.1069,0.089,0.2667,0.1912,0.0329
+2026,0.79,0.1244,0.1063,0.3049,0.2861,0.0658

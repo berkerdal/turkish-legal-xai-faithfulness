@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# Model checkpoints (regenerated from the training notebook)
+models/
+*.safetensors
+*.bin
+
+# OS
+.DS_Store
+Thumbs.db

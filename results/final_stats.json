@@ -1,0 +1,548 @@
+{
+  "means": {
+    "comprehensiveness_mask": {
+      "Raw attention": [
+        0.106,
+        0.133
+      ],
+      "Attention rollout": [
+        0.079,
+        0.133
+      ],
+      "Integrated Gradients": [
+        0.24,
+        0.143
+      ],
+      "Chefer": [
+        0.239,
+        0.134
+      ],
+      "Random": [
+        0.053,
+        0.062
+      ]
+    },
+    "comprehensiveness_delete": {
+      "Raw attention": [
+        0.113,
+        0.153
+      ],
+      "Attention rollout": [
+        0.076,
+        0.126
+      ],
+      "Integrated Gradients": [
+        0.251,
+        0.185
+      ],
+      "Chefer": [
+        0.261,
+        0.173
+      ],
+      "Random": [
+        0.043,
+        0.082
+      ]
+    },
+    "sufficiency_mask": {
+      "Raw attention": [
+        0.254,
+        0.379
+      ],
+      "Attention rollout": [
+        0.248,
+        0.361
+      ],
+      "Integrated Gradients": [
+        0.226,
+        0.368
+      ],
+      "Chefer": [
+        0.242,
+        0.373
+      ],
+      "Random": [
+        0.263,
+        0.373
+      ]
+    },
+    "sufficiency_delete": {
+      "Raw attention": [
+        0.124,
+        0.119
+      ],
+      "Attention rollout": [
+        0.147,
+        0.169
+      ],
+      "Integrated Gradients": [
+        0.025,
+        0.165
+      ],
+      "Chefer": [
+        0.003,
+        0.152
+      ],
+      "Random": [
+        0.188,
+        0.147
+      ]
+    }
+  },
+  "friedman": {
+    "comprehensiveness_mask": {
+      "chi2": 144.47,
+      "p": 3.1201158957664223e-30,
+      "df": 4
+    },
+    "comprehensiveness_delete": {
+      "chi2": 127.13,
+      "p": 1.5971871213753268e-26,
+      "df": 4
+    },
+    "sufficiency_mask": {
+      "chi2": 72.47,
+      "p": 6.839040739144502e-15,
+      "df": 4
+    },
+    "sufficiency_delete": {
+      "chi2": 87.21,
+      "p": 5.1435748401347144e-18,
+      "df": 4
+    }
+  },
+  "pairwise": {
+    "comprehensiveness_mask": [
+      {
+        "pair": "Raw attention - Attention rollout",
+        "delta": 0.027,
+        "ci": [
+          -0.002,
+          0.056
+        ],
+        "p_adj": 0.2139,
+        "r": 0.27
+      },
+      {
+        "pair": "Raw attention - Integrated Gradients",
+        "delta": -0.134,
+        "ci": [
+          -0.17,
+          -0.1
+        ],
+        "p_adj": 0.0,
+        "r": -0.91
+      },
+      {
+        "pair": "Raw attention - Chefer",
+        "delta": -0.133,
+        "ci": [
+          -0.157,
+          -0.11
+        ],
+        "p_adj": 0.0,
+        "r": -0.99
+      },
+      {
+        "pair": "Raw attention - Random",
+        "delta": 0.053,
+        "ci": [
+          0.024,
+          0.081
+        ],
+        "p_adj": 0.003,
+        "r": 0.5
+      },
+      {
+        "pair": "Attention rollout - Integrated Gradients",
+        "delta": -0.161,
+        "ci": [
+          -0.202,
+          -0.123
+        ],
+        "p_adj": 0.0,
+        "r": -0.92
+      },
+      {
+        "pair": "Attention rollout - Chefer",
+        "delta": -0.16,
+        "ci": [
+          -0.19,
+          -0.131
+        ],
+        "p_adj": 0.0,
+        "r": -0.98
+      },
+      {
+        "pair": "Attention rollout - Random",
+        "delta": 0.026,
+        "ci": [
+          -0.008,
+          0.06
+        ],
+        "p_adj": 0.4603,
+        "r": 0.18
+      },
+      {
+        "pair": "Integrated Gradients - Chefer",
+        "delta": 0.001,
+        "ci": [
+          -0.025,
+          0.028
+        ],
+        "p_adj": 0.7572,
+        "r": -0.05
+      },
+      {
+        "pair": "Integrated Gradients - Random",
+        "delta": 0.187,
+        "ci": [
+          0.155,
+          0.22
+        ],
+        "p_adj": 0.0,
+        "r": 0.97
+      },
+      {
+        "pair": "Chefer - Random",
+        "delta": 0.186,
+        "ci": [
+          0.155,
+          0.218
+        ],
+        "p_adj": 0.0,
+        "r": 0.98
+      }
+    ],
+    "comprehensiveness_delete": [
+      {
+        "pair": "Raw attention - Attention rollout",
+        "delta": 0.037,
+        "ci": [
+          -0.0,
+          0.076
+        ],
+        "p_adj": 0.4162,
+        "r": 0.19
+      },
+      {
+        "pair": "Raw attention - Integrated Gradients",
+        "delta": -0.138,
+        "ci": [
+          -0.182,
+          -0.093
+        ],
+        "p_adj": 0.0,
+        "r": -0.74
+      },
+      {
+        "pair": "Raw attention - Chefer",
+        "delta": -0.148,
+        "ci": [
+          -0.181,
+          -0.116
+        ],
+        "p_adj": 0.0,
+        "r": -0.93
+      },
+      {
+        "pair": "Raw attention - Random",
+        "delta": 0.07,
+        "ci": [
+          0.038,
+          0.103
+        ],
+        "p_adj": 0.0008,
+        "r": 0.55
+      },
+      {
+        "pair": "Attention rollout - Integrated Gradients",
+        "delta": -0.175,
+        "ci": [
+          -0.221,
+          -0.13
+        ],
+        "p_adj": 0.0,
+        "r": -0.88
+      },
+      {
+        "pair": "Attention rollout - Chefer",
+        "delta": -0.185,
+        "ci": [
+          -0.228,
+          -0.144
+        ],
+        "p_adj": 0.0,
+        "r": -0.92
+      },
+      {
+        "pair": "Attention rollout - Random",
+        "delta": 0.033,
+        "ci": [
+          0.001,
+          0.065
+        ],
+        "p_adj": 0.1455,
+        "r": 0.29
+      },
+      {
+        "pair": "Integrated Gradients - Chefer",
+        "delta": -0.01,
+        "ci": [
+          -0.041,
+          0.02
+        ],
+        "p_adj": 0.5029,
+        "r": -0.1
+      },
+      {
+        "pair": "Integrated Gradients - Random",
+        "delta": 0.208,
+        "ci": [
+          0.166,
+          0.251
+        ],
+        "p_adj": 0.0,
+        "r": 0.93
+      },
+      {
+        "pair": "Chefer - Random",
+        "delta": 0.219,
+        "ci": [
+          0.183,
+          0.255
+        ],
+        "p_adj": 0.0,
+        "r": 0.99
+      }
+    ],
+    "sufficiency_mask": [
+      {
+        "pair": "Raw attention - Attention rollout",
+        "delta": 0.006,
+        "ci": [
+          -0.001,
+          0.014
+        ],
+        "p_adj": 0.089,
+        "r": 0.25
+      },
+      {
+        "pair": "Raw attention - Integrated Gradients",
+        "delta": 0.028,
+        "ci": [
+          0.019,
+          0.036
+        ],
+        "p_adj": 0.0,
+        "r": 0.74
+      },
+      {
+        "pair": "Raw attention - Chefer",
+        "delta": 0.012,
+        "ci": [
+          0.006,
+          0.017
+        ],
+        "p_adj": 0.0001,
+        "r": 0.63
+      },
+      {
+        "pair": "Raw attention - Random",
+        "delta": -0.008,
+        "ci": [
+          -0.015,
+          -0.002
+        ],
+        "p_adj": 0.0544,
+        "r": -0.35
+      },
+      {
+        "pair": "Attention rollout - Integrated Gradients",
+        "delta": 0.021,
+        "ci": [
+          0.015,
+          0.028
+        ],
+        "p_adj": 0.0,
+        "r": 0.8
+      },
+      {
+        "pair": "Attention rollout - Chefer",
+        "delta": 0.006,
+        "ci": [
+          -0.003,
+          0.013
+        ],
+        "p_adj": 0.0786,
+        "r": 0.31
+      },
+      {
+        "pair": "Attention rollout - Random",
+        "delta": -0.015,
+        "ci": [
+          -0.021,
+          -0.008
+        ],
+        "p_adj": 0.0004,
+        "r": -0.59
+      },
+      {
+        "pair": "Integrated Gradients - Chefer",
+        "delta": -0.016,
+        "ci": [
+          -0.024,
+          -0.008
+        ],
+        "p_adj": 0.0022,
+        "r": -0.51
+      },
+      {
+        "pair": "Integrated Gradients - Random",
+        "delta": -0.036,
+        "ci": [
+          -0.043,
+          -0.029
+        ],
+        "p_adj": 0.0,
+        "r": -0.95
+      },
+      {
+        "pair": "Chefer - Random",
+        "delta": -0.02,
+        "ci": [
+          -0.027,
+          -0.014
+        ],
+        "p_adj": 0.0,
+        "r": -0.71
+      }
+    ],
+    "sufficiency_delete": [
+      {
+        "pair": "Raw attention - Attention rollout",
+        "delta": -0.023,
+        "ci": [
+          -0.067,
+          0.019
+        ],
+        "p_adj": 0.7461,
+        "r": -0.13
+      },
+      {
+        "pair": "Raw attention - Integrated Gradients",
+        "delta": 0.099,
+        "ci": [
+          0.065,
+          0.131
+        ],
+        "p_adj": 0.0,
+        "r": 0.69
+      },
+      {
+        "pair": "Raw attention - Chefer",
+        "delta": 0.121,
+        "ci": [
+          0.093,
+          0.148
+        ],
+        "p_adj": 0.0,
+        "r": 0.87
+      },
+      {
+        "pair": "Raw attention - Random",
+        "delta": -0.064,
+        "ci": [
+          -0.091,
+          -0.038
+        ],
+        "p_adj": 0.0002,
+        "r": -0.6
+      },
+      {
+        "pair": "Attention rollout - Integrated Gradients",
+        "delta": 0.122,
+        "ci": [
+          0.083,
+          0.162
+        ],
+        "p_adj": 0.0,
+        "r": 0.75
+      },
+      {
+        "pair": "Attention rollout - Chefer",
+        "delta": 0.144,
+        "ci": [
+          0.096,
+          0.194
+        ],
+        "p_adj": 0.0,
+        "r": 0.71
+      },
+      {
+        "pair": "Attention rollout - Random",
+        "delta": -0.041,
+        "ci": [
+          -0.082,
+          0.0
+        ],
+        "p_adj": 0.1406,
+        "r": -0.3
+      },
+      {
+        "pair": "Integrated Gradients - Chefer",
+        "delta": 0.022,
+        "ci": [
+          -0.014,
+          0.06
+        ],
+        "p_adj": 0.7461,
+        "r": 0.13
+      },
+      {
+        "pair": "Integrated Gradients - Random",
+        "delta": -0.163,
+        "ci": [
+          -0.193,
+          -0.132
+        ],
+        "p_adj": 0.0,
+        "r": -0.92
+      },
+      {
+        "pair": "Chefer - Random",
+        "delta": -0.185,
+        "ci": [
+          -0.216,
+          -0.153
+        ],
+        "p_adj": 0.0,
+        "r": -0.96
+      }
+    ]
+  },
+  "stratum_random": {},
+  "stratum_comp_mask": {
+    "dusuk_guven_dogru": {
+      "Raw attention": 0.02,
+      "Attention rollout": -0.014,
+      "Integrated Gradients": 0.216,
+      "Chefer": 0.19,
+      "Random": 0.044
+    },
+    "hatali": {
+      "Raw attention": 0.136,
+      "Attention rollout": 0.108,
+      "Integrated Gradients": 0.278,
+      "Chefer": 0.276,
+      "Random": 0.065
+    },
+    "yuksek_guven_dogru": {
+      "Raw attention": 0.162,
+      "Attention rollout": 0.143,
+      "Integrated Gradients": 0.225,
+      "Chefer": 0.252,
+      "Random": 0.051
+    }
+  }
+}
