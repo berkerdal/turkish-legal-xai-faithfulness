@@ -18,7 +18,6 @@ on the same stratified sample.
   self-explanation in a single generation so the two are coupled, computes an
   occlusion reference and a size-matched random baseline, and measures
   comprehensiveness and sufficiency under both operators.
-- `build_pilot_notebook.py` — regenerates the Kaggle notebooks from these scripts.
 - `../xai/make_llm_fig_en.py` — builds the main-text figure from the per-instance
   results.
 

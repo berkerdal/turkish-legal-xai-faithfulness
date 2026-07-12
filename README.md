@@ -50,7 +50,6 @@ src/xai/                      analysis code
   run_aopc.py                 comprehensiveness perturbation curves
   leakage_analysis.py         verdict-cue scan, lexical baseline, truncation curve
   stratum_composition.py      class composition of the stratified sample
-  rq2_token_types.py          attribution mass by token type
   make_figures_en.py          main-text figures
   make_appendix_figs.py       supplementary figures
   make_aopc_fig.py            perturbation-curve figure
@@ -58,7 +57,6 @@ src/xai/                      analysis code
 src/llm_pilot/                generative-model analysis (RQ4)
   llm_finetune.py             QLoRA fine-tuning of the base model
   llm_faithfulness_pilot.py   self-explanation elicitation and faithfulness evaluation
-  build_pilot_notebook.py     regenerates the Kaggle notebooks from these scripts
   README.md                   procedure and mapping of outputs to the paper
 notebooks/
   train_kaggle.ipynb          fine-tuning (GPU)
