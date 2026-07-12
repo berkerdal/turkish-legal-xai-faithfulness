@@ -1,4 +1,4 @@
-"""Faz 4 runner — havuzun bir alt-kümesinde 4 yöntem için comprehensiveness/sufficiency."""
+"""Runner: comprehensiveness/sufficiency for the four methods on a subset of the pool."""
 import os, sys, json, time
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"; os.environ["PYTHONIOENCODING"] = "utf-8"
 sys.path.insert(0, r".\src")
@@ -24,17 +24,17 @@ for n, e in enumerate(pool, 1):
         r = F.evaluate(exp, text, atts[m])
         rows.append({"idx": e["idx"], "method": m,
                      "comprehensiveness": r["comprehensiveness"], "sufficiency": r["sufficiency"]})
-    print(f"  {n}/{len(pool)} (idx={e['idx']}) bitti | geçen {time.time()-t0:.0f}s")
+    print(f"  {n}/{len(pool)} (idx={e['idx']}) done | elapsed {time.time()-t0:.0f}s")
 
 res = pd.DataFrame(rows)
 agg = res.groupby("method").agg(
     comp_mean=("comprehensiveness", "mean"), comp_std=("comprehensiveness", "std"),
     suff_mean=("sufficiency", "mean"), suff_std=("sufficiency", "std")).reindex(methods)
 
-print("\n=== FAITHFULNESS (n=%d örnek) ===" % len(pool))
-print("comprehensiveness ↑ iyi | sufficiency ↓ iyi\n")
+print("\n=== FAITHFULNESS (n=%d instances) ===" % len(pool))
+print("comprehensiveness ↑ better | sufficiency ↓ better\n")
 print(agg.round(4).to_string())
 
 res.to_csv(rf"{ROOT}\results\faithfulness_subset_raw.csv", index=False)
 agg.to_csv(rf"{ROOT}\results\faithfulness_subset_agg.csv")
-print("\nKaydedildi: results/faithfulness_subset_{raw,agg}.csv")
+print("\nSaved: results/faithfulness_subset_{raw,agg}.csv")

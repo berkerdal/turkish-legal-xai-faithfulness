@@ -1,7 +1,7 @@
 {
   "per_method": {
     "comprehensiveness_mask": {
-      "Ham dikkat": {
+      "Raw attention": {
         "mean": 0.106,
         "std": 0.133,
         "ci": [
@@ -9,7 +9,7 @@
           0.138
         ]
       },
-      "Dikkat yayılımı": {
+      "Attention rollout": {
         "mean": 0.079,
         "std": 0.133,
         "ci": [
@@ -17,7 +17,7 @@
           0.112
         ]
       },
-      "Bütünleşik Gradyanlar": {
+      "Integrated Gradients": {
         "mean": 0.24,
         "std": 0.143,
         "ci": [
@@ -33,7 +33,7 @@
           0.273
         ]
       },
-      "Rastgele": {
+      "Random": {
         "mean": 0.056,
         "std": 0.077,
         "ci": [
@@ -43,7 +43,7 @@
       }
     },
     "sufficiency_mask": {
-      "Ham dikkat": {
+      "Raw attention": {
         "mean": 0.254,
         "std": 0.379,
         "ci": [
@@ -51,7 +51,7 @@
           0.348
         ]
       },
-      "Dikkat yayılımı": {
+      "Attention rollout": {
         "mean": 0.248,
         "std": 0.361,
         "ci": [
@@ -59,7 +59,7 @@
           0.339
         ]
       },
-      "Bütünleşik Gradyanlar": {
+      "Integrated Gradients": {
         "mean": 0.226,
         "std": 0.368,
         "ci": [
@@ -75,7 +75,7 @@
           0.332
         ]
       },
-      "Rastgele": {
+      "Random": {
         "mean": 0.27,
         "std": 0.372,
         "ci": [
@@ -85,7 +85,7 @@
       }
     },
     "comprehensiveness_delete": {
-      "Ham dikkat": {
+      "Raw attention": {
         "mean": 0.113,
         "std": 0.153,
         "ci": [
@@ -93,7 +93,7 @@
           0.152
         ]
       },
-      "Dikkat yayılımı": {
+      "Attention rollout": {
         "mean": 0.076,
         "std": 0.126,
         "ci": [
@@ -101,7 +101,7 @@
           0.108
         ]
       },
-      "Bütünleşik Gradyanlar": {
+      "Integrated Gradients": {
         "mean": 0.251,
         "std": 0.185,
         "ci": [
@@ -117,7 +117,7 @@
           0.304
         ]
       },
-      "Rastgele": {
+      "Random": {
         "mean": 0.049,
         "std": 0.119,
         "ci": [
@@ -127,7 +127,7 @@
       }
     },
     "sufficiency_delete": {
-      "Ham dikkat": {
+      "Raw attention": {
         "mean": 0.124,
         "std": 0.119,
         "ci": [
@@ -135,7 +135,7 @@
           0.154
         ]
       },
-      "Dikkat yayılımı": {
+      "Attention rollout": {
         "mean": 0.147,
         "std": 0.169,
         "ci": [
@@ -143,7 +143,7 @@
           0.189
         ]
       },
-      "Bütünleşik Gradyanlar": {
+      "Integrated Gradients": {
         "mean": 0.025,
         "std": 0.165,
         "ci": [
@@ -159,7 +159,7 @@
           0.041
         ]
       },
-      "Rastgele": {
+      "Random": {
         "mean": 0.211,
         "std": 0.147,
         "ci": [
@@ -171,7 +171,7 @@
   },
   "pairwise_comp_mask": [
     {
-      "pair": "Ham dikkat − Dikkat yayılımı",
+      "pair": "Raw attention − Attention rollout",
       "delta": 0.027009109904368705,
       "ci_lo": -0.002041231494396938,
       "ci_hi": 0.0564656300966938,
@@ -180,7 +180,7 @@
       "p_adj": 0.21388552727822266
     },
     {
-      "pair": "Ham dikkat − Bütünleşik Gradyanlar",
+      "pair": "Raw attention − Integrated Gradients",
       "delta": -0.13400373130881535,
       "ci_lo": -0.1703088527037762,
       "ci_hi": -0.09978837367694358,
@@ -189,7 +189,7 @@
       "p_adj": 4.538348467551563e-09
     },
     {
-      "pair": "Ham dikkat − Chefer",
+      "pair": "Raw attention − Chefer",
       "delta": -0.1332937857803578,
       "ci_lo": -0.15686123633446789,
       "ci_hi": -0.11037530211910294,
@@ -198,7 +198,7 @@
       "p_adj": 2.835137210801389e-10
     },
     {
-      "pair": "Ham dikkat − Rastgele",
+      "pair": "Raw attention − Random",
       "delta": 0.04951948689917725,
       "ci_lo": 0.019016613733954735,
       "ci_hi": 0.07876057896297423,
@@ -207,7 +207,7 @@
       "p_adj": 0.00878200520507973
     },
     {
-      "pair": "Dikkat yayılımı − Bütünleşik Gradyanlar",
+      "pair": "Attention rollout − Integrated Gradients",
       "delta": -0.16101284121318404,
       "ci_lo": -0.20150323839330425,
       "ci_hi": -0.12122286525710174,
@@ -216,7 +216,7 @@
       "p_adj": 3.420886128926982e-09
     },
     {
-      "pair": "Dikkat yayılımı − Chefer",
+      "pair": "Attention rollout − Chefer",
       "delta": -0.16030289568472653,
       "ci_lo": -0.19044940428536697,
       "ci_hi": -0.13180566134676336,
@@ -225,7 +225,7 @@
       "p_adj": 3.617528311898458e-10
     },
     {
-      "pair": "Dikkat yayılımı − Rastgele",
+      "pair": "Attention rollout − Random",
       "delta": 0.022510376994808543,
       "ci_lo": -0.011850863630572925,
       "ci_hi": 0.05694624197234709,
@@ -234,7 +234,7 @@
       "p_adj": 0.5715532167079245
     },
     {
-      "pair": "Bütünleşik Gradyanlar − Chefer",
+      "pair": "Integrated Gradients − Chefer",
       "delta": 0.0007099455284575765,
       "ci_lo": -0.024609055157828436,
       "ci_hi": 0.027464750960857286,
@@ -243,7 +243,7 @@
       "p_adj": 0.757179034233802
     },
     {
-      "pair": "Bütünleşik Gradyanlar − Rastgele",
+      "pair": "Integrated Gradients − Random",
       "delta": 0.18352321820799264,
       "ci_lo": 0.1464249598864311,
       "ci_hi": 0.2210630075103448,
@@ -252,7 +252,7 @@
       "p_adj": 1.9672584296073493e-09
     },
     {
-      "pair": "Chefer − Rastgele",
+      "pair": "Chefer − Random",
       "delta": 0.18281327267953504,
       "ci_lo": 0.14978223871750138,
       "ci_hi": 0.2154727286146565,

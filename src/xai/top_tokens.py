@@ -1,10 +1,10 @@
-"""Fig 3 örneği için yöntem başına en yüksek atıflı token'lar (top-token tablosu için)."""
+"""Highest-attributed tokens per method for the Figure 3 example (top-token table)."""
 import os, json
 os.environ["PYTHONIOENCODING"] = "utf-8"
 import numpy as np
 ROOT = r"."
 data = json.load(open(rf"{ROOT}\results\attributions_rev.json", encoding="utf-8"))
-pick = next((k for k, v in data.items() if v["stratum"] == "yuksek_guven_dogru"), list(data)[0])
+pick = next((k for k, v in data.items() if v["stratum"] == "high_confidence_correct"), list(data)[0])
 rec = data[pick]; toks = rec["tokens"]
 methods = {"Raw attention":"raw_attention","Attention rollout":"attention_rollout",
            "Integrated Gradients":"integrated_gradients","Chefer":"chefer_relevance"}

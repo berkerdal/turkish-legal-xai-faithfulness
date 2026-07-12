@@ -1,5 +1,6 @@
-"""Appendix figürleri (EN, 300 dpi): A2 dağılım, A3 token-tipi yığılı çubuk, A4 leakage keyword.
-Okabe-Ito palet, main figürlerle tutarlı."""
+"""Supplementary figures (English, 600 dpi): comprehensiveness distribution,
+token-type stacked bar, and the leakage keyword evidence. Okabe-Ito palette,
+consistent with the main figures."""
 import os, json
 os.environ["PYTHONIOENCODING"] = "utf-8"
 import numpy as np, pandas as pd

@@ -1,5 +1,5 @@
-"""Revizyon istatistikleri: iki operatör × Friedman + Holm-düzeltmeli Wilcoxon,
-katman kırılımı, ve geniş örneklemde RQ2 token-tipi."""
+"""Revision statistics: two operators x Friedman + Holm-adjusted Wilcoxon, a
+per-stratum breakdown, and the RQ2 token-type shares on the wider sample."""
 import os, sys, json, re, itertools
 os.environ["PYTHONIOENCODING"] = "utf-8"
 import numpy as np, pandas as pd
@@ -20,7 +20,7 @@ def holm(pairs):  # pairs: list of (label, p) -> adjusted
     return adj
 
 out = {}
-print(f"Örneklem n={raw.idx.nunique()} | katmanlar: {raw.groupby('stratum').idx.nunique().to_dict()}")
+print(f"Sample n={raw.idx.nunique()} | strata: {raw.groupby('stratum').idx.nunique().to_dict()}")
 for op in ["mask", "delete"]:
     out[op] = {}
     sub = raw[raw.operator == op]
@@ -30,7 +30,7 @@ for op in ["mask", "delete"]:
         fr = friedmanchisquare(*[piv[m] for m in methods])
         means = {short[m]: round(float(piv[m].mean()),4) for m in methods}
         print(f"\n=== operator={op} | {metric} | n={n} ===")
-        print("ort:", means, f"| Friedman p={fr.pvalue:.3g}")
+        print("means:", means, f"| Friedman p={fr.pvalue:.3g}")
         pairs = []
         for a,b in itertools.combinations(methods, 2):
             try: p = float(wilcoxon(piv[a], piv[b]).pvalue)
@@ -44,15 +44,15 @@ for op in ["mask", "delete"]:
             print(f"  {lbl:20s} Δ={d:+.4f}  p_holm={pa:.4f} {sig}{tag}")
             out[op][metric]["pairs"][lbl] = {"delta":d,"p_holm":pa,"sig":sig}
 
-# --- Katman kırılımı (mask, comprehensiveness) — sıralama sağlamlığı ---
-print("\n=== Katman kırılımı: comprehensiveness ort. (operator=mask) ===")
+# --- per-stratum breakdown (mask, comprehensiveness): ranking robustness ---
+print("\n=== per-stratum breakdown: mean comprehensiveness (operator=mask) ===")
 piv2 = raw[raw.operator=="mask"].pivot_table(index="stratum", columns="method",
         values="comprehensiveness", aggfunc="mean")[methods]
 piv2.columns = [short[m] for m in methods]
 print(piv2.round(3).to_string())
 out["stratum_comp_mask"] = piv2.round(4).to_dict()
 
-# --- RQ2 geniş örneklem ---
+# --- RQ2 on the wider sample ---
 data = json.load(open(rf"{ROOT}\results\attributions_rev.json", encoding="utf-8"))
 TR_STOP=set("ve bir bu ile için olarak da de ki mi mı mu mü ya veya ama ise ne gibi kadar daha en çok az her hiç şey o şu".split())
 PUNCT=set(".,;:!?()[]{}\"'`«»—–-…/\\|"); types=["content","punctuation","subword","stopword","number"]
@@ -71,10 +71,10 @@ for idx,rec in data.items():
         if s.sum()<=0: continue
         for ty in types: pm[m][ty].append(s[[i for i,x in enumerate(tt) if x==ty]].sum()/s.sum())
 rq2=pd.DataFrame({short[m]:{ty:round(100*np.mean(pm[m][ty]),1) for ty in types} for m in methods}).T[types]
-print("\n=== RQ2 (geniş örneklem, n=%d): önem kütlesi %% ===" % len(data))
+print("\n=== RQ2 (wider sample, n=%d): importance mass %% ===" % len(data))
 print(rq2.to_string())
 out["rq2"]=rq2.to_dict()
 
 json.dump(out, open(rf"{ROOT}\results\faithfulness_rev_stats.json","w",encoding="utf-8"), ensure_ascii=False, indent=2)
 rq2.to_csv(rf"{ROOT}\results\rq2_rev.csv")
-print("\nKaydedildi: faithfulness_rev_stats.json + rq2_rev.csv")
+print("\nSaved: faithfulness_rev_stats.json + rq2_rev.csv")

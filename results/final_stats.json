@@ -523,21 +523,21 @@
   },
   "stratum_random": {},
   "stratum_comp_mask": {
-    "dusuk_guven_dogru": {
+    "low_confidence_correct": {
       "Raw attention": 0.02,
       "Attention rollout": -0.014,
       "Integrated Gradients": 0.216,
       "Chefer": 0.19,
       "Random": 0.044
     },
-    "hatali": {
+    "incorrect": {
       "Raw attention": 0.136,
       "Attention rollout": 0.108,
       "Integrated Gradients": 0.278,
       "Chefer": 0.276,
       "Random": 0.065
     },
-    "yuksek_guven_dogru": {
+    "high_confidence_correct": {
       "Raw attention": 0.162,
       "Attention rollout": 0.143,
       "Integrated Gradients": 0.225,

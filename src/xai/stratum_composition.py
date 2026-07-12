@@ -1,4 +1,4 @@
-"""Katman kompozisyonu (sınıf sayıları) — Supplementary Table için."""
+"""Stratum composition (class counts) for the supplementary table."""
 import os, json
 os.environ["PYTHONIOENCODING"] = "utf-8"
 import pandas as pd

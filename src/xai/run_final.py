@@ -1,5 +1,5 @@
-"""Faz 4 nihai koşu: 4 yöntem + RASTGELE baseline; attributions'ı kaydet (RQ2/ısı haritası için).
-Çıktı: results/faithfulness_full_raw.csv, results/attributions_pool.json"""
+"""Final run: four methods + random baseline; saves the attributions (for RQ2 and
+the heatmap). Writes results/faithfulness_full_raw.csv, results/attributions_pool.json."""
 import os, sys, json, time
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"; os.environ["PYTHONIOENCODING"] = "utf-8"
 sys.path.insert(0, r".\src")
@@ -19,7 +19,7 @@ t0 = time.time()
 for n, e in enumerate(pool, 1):
     idx = e["idx"]; text = str(df.loc[idx, "text"])
     atts = exp.all_methods(text)
-    # rastgele baseline: gerçek tahmin + rastgele skorlar
+    # random baseline: real prediction, random scores
     ref = next(iter(atts.values()))
     rand = Attribution("random", ref.tokens, rng.random(len(ref.tokens)), ref.pred, ref.prob)
     atts["random"] = rand
@@ -36,4 +36,4 @@ for n, e in enumerate(pool, 1):
 pd.DataFrame(rows).to_csv(rf"{ROOT}\results\faithfulness_full_raw.csv", index=False)
 json.dump(saved, open(rf"{ROOT}\results\attributions_pool.json", "w", encoding="utf-8"),
           ensure_ascii=False)
-print("\nKaydedildi: faithfulness_full_raw.csv + attributions_pool.json")
+print("\nSaved: faithfulness_full_raw.csv + attributions_pool.json")

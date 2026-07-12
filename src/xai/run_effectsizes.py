@@ -1,5 +1,6 @@
-"""Hakem revizyonu: mean±std, %95 bootstrap GA, Holm p_adj, rank-biserial etki büyüklüğü.
-faithfulness_rev_raw.csv'den; comprehensiveness [MASK] için ikili karşılaştırma tablosu."""
+"""Effect sizes: mean±std, 95% bootstrap CI, Holm-adjusted p, rank-biserial effect
+size. Reads faithfulness_rev_raw.csv; builds the pairwise comparison table for
+comprehensiveness under [MASK]."""
 import os, sys, json, itertools
 os.environ["PYTHONIOENCODING"] = "utf-8"
 import numpy as np, pandas as pd
@@ -8,8 +9,8 @@ from scipy.stats import wilcoxon, rankdata
 ROOT = r"."
 raw = pd.read_csv(rf"{ROOT}\results\faithfulness_rev_raw.csv")
 methods = ["raw_attention","attention_rollout","integrated_gradients","chefer_relevance","random"]
-short = {"raw_attention":"Ham dikkat","attention_rollout":"Dikkat yayılımı",
-         "integrated_gradients":"Bütünleşik Gradyanlar","chefer_relevance":"Chefer","random":"Rastgele"}
+short = {"raw_attention":"Raw attention","attention_rollout":"Attention rollout",
+         "integrated_gradients":"Integrated Gradients","chefer_relevance":"Chefer","random":"Random"}
 rng = np.random.default_rng(7)
 
 def boot_ci(x, n=10000):
@@ -29,7 +30,7 @@ def holm(ps):
     return adj
 
 out = {}
-# --- Per-method mean±std + %95 GA (her operatör × metrik) ---
+# --- per-method mean±std + 95% CI (each operator x metric) ---
 summary = {}
 for op in ["mask","delete"]:
     for metric in ["comprehensiveness","sufficiency"]:
@@ -40,13 +41,13 @@ for op in ["mask","delete"]:
             summary[f"{metric}_{op}"][short[m]] = {
                 "mean":round(float(piv[m].mean()),3),"std":round(float(piv[m].std()),3),
                 "ci":[round(lo,3),round(hi,3)]}
-print("=== Per-method mean±std + %95 GA ===")
+print("=== per-method mean±std + 95% CI ===")
 for k,v in summary.items():
     print(f"\n[{k}]")
-    for m,s in v.items(): print(f"  {m:22s} {s['mean']:.3f} ± {s['std']:.3f}  GA[{s['ci'][0]:.3f}, {s['ci'][1]:.3f}]")
+    for m,s in v.items(): print(f"  {m:22s} {s['mean']:.3f} ± {s['std']:.3f}  CI[{s['ci'][0]:.3f}, {s['ci'][1]:.3f}]")
 out["per_method"] = summary
 
-# --- İkili karşılaştırma tablosu (comprehensiveness, mask) ---
+# --- pairwise comparison table (comprehensiveness, mask) ---
 op, metric = "mask", "comprehensiveness"
 piv = raw[raw.operator==op].pivot(index="idx",columns="method",values=metric)[methods].dropna()
 pairs = list(itertools.combinations(methods,2))
@@ -59,8 +60,8 @@ for a,b in pairs:
     rows.append({"pair":f"{short[a]} − {short[b]}","delta":float(d.mean()),
                  "ci_lo":lo,"ci_hi":hi,"p":p,"r":rank_biserial(piv[a],piv[b])})
 adj = holm(ps)
-print("\n=== İkili karşılaştırma (comprehensiveness, [MASK]) ===")
-print(f"{'Karşılaştırma':40s} {'Δ':>8s} {'%95 GA':>18s} {'p_adj':>8s} {'r':>6s}")
+print("\n=== pairwise comparison (comprehensiveness, [MASK]) ===")
+print(f"{'Comparison':40s} {'Δ':>8s} {'95% CI':>18s} {'p_adj':>8s} {'r':>6s}")
 tbl=[]
 for row,pa in zip(rows,adj):
     row["p_adj"]=pa
@@ -68,4 +69,4 @@ for row,pa in zip(rows,adj):
     tbl.append(row)
 out["pairwise_comp_mask"]=tbl
 json.dump(out, open(rf"{ROOT}\results\effectsizes.json","w",encoding="utf-8"),ensure_ascii=False,indent=2)
-print("\nKaydedildi: results/effectsizes.json")
+print("\nSaved: results/effectsizes.json")

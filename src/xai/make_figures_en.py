@@ -57,7 +57,7 @@ fig.tight_layout(); fig.savefig(rf"{ROOT}\results\fig2_stratum_en.png", dpi=600,
 
 # ---- Figure 3: Heatmap ----
 data = json.load(open(rf"{ROOT}\results\attributions_rev.json", encoding="utf-8"))
-pick = next((k for k, v in data.items() if v["stratum"] == "yuksek_guven_dogru"), list(data)[0])
+pick = next((k for k, v in data.items() if v["stratum"] == "high_confidence_correct"), list(data)[0])
 rec = data[pick]; N = 40
 toks = rec["tokens"][:N]
 rows = ["Raw attention", "Attention rollout", "Integrated Gradients", "Chefer"]

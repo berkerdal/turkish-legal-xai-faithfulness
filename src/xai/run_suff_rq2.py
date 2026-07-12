@@ -1,4 +1,4 @@
-"""Sufficiency pairwise (delete, birincil ayrım) + RQ2 number sütunu doğrulaması."""
+"""Sufficiency pairwise (delete, primary separation) + RQ2 number-column check."""
 import os, json, re, itertools
 os.environ["PYTHONIOENCODING"] = "utf-8"
 import numpy as np, pandas as pd
@@ -38,7 +38,7 @@ for row,pa in zip(rows,adj):
     res.append({**row,"p_adj":pa})
 json.dump(res, open(rf"{ROOT}\results\suff_pairwise_delete.json","w",encoding="utf-8"),ensure_ascii=False,indent=2)
 
-# --- RQ2 number sütunu (rev örneklem) ---
+# --- RQ2 with the number column (revision sample) ---
 data=json.load(open(rf"{ROOT}\results\attributions_rev.json",encoding="utf-8"))
 TR_STOP=set("ve bir bu ile için olarak da de ki mi mı mu mü ya veya ama ise ne gibi kadar daha en çok az her hiç şey o şu".split())
 PUNCT=set(".,;:!?()[]{}\"'`«»—–-…/\\|"); types=["content","punctuation","subword","stopword","number"]
@@ -60,4 +60,4 @@ tbl=pd.DataFrame({short[m]:{ty:round(100*np.mean(pm[m][ty]),1) for ty in types} 
 print("\n=== RQ2 (n=60) with number column ===")
 print(tbl.to_string())
 tbl.to_csv(rf"{ROOT}\results\rq2_rev_full.csv")
-print("\nKaydedildi: suff_pairwise_delete.json + rq2_rev_full.csv")
+print("\nSaved: suff_pairwise_delete.json + rq2_rev_full.csv")

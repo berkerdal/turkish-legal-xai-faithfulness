@@ -1,5 +1,5 @@
-"""Faithfulness sonuçlarına eşleştirilmiş istatistiksel test.
-Friedman (omnibus, 4 yöntem) + çiftli Wilcoxon signed-rank + eşleştirilmiş ortalama fark."""
+"""Paired statistical tests on the faithfulness results.
+Friedman (omnibus, 4 methods) + pairwise Wilcoxon signed-rank + paired mean difference."""
 import os, sys, json, itertools
 os.environ["PYTHONIOENCODING"] = "utf-8"
 import numpy as np, pandas as pd
@@ -15,12 +15,12 @@ for metric, better in [("comprehensiveness", "↑"), ("sufficiency", "↓")]:
     n = len(piv)
     # Friedman omnibus
     fr = friedmanchisquare(*[piv[m] for m in methods])
-    print(f"\n===== {metric} ({better} iyi) | n={n} =====")
+    print(f"\n===== {metric} ({better} better) | n={n} =====")
     print(f"Friedman omnibus: chi2={fr.statistic:.3f}, p={fr.pvalue:.4f}")
     out[metric] = {"n": int(n), "friedman_chi2": float(fr.statistic),
                    "friedman_p": float(fr.pvalue),
                    "means": {m: float(piv[m].mean()) for m in methods}, "pairs": {}}
-    print(f"{'çift':45s} {'Δort':>8s} {'W':>8s} {'p':>8s}  anlamlı?")
+    print(f"{'pair':45s} {'Δmean':>8s} {'W':>8s} {'p':>8s}  significant?")
     for a, b in itertools.combinations(methods, 2):
         d = piv[a] - piv[b]
         mean_d = float(d.mean())
@@ -35,4 +35,4 @@ for metric, better in [("comprehensiveness", "↑"), ("sufficiency", "↓")]:
 
 json.dump(out, open(rf"{ROOT}\results\faithfulness_stats.json", "w", encoding="utf-8"),
           ensure_ascii=False, indent=2)
-print("\nKaydedildi: results/faithfulness_stats.json")
+print("\nSaved: results/faithfulness_stats.json")

@@ -1,5 +1,5 @@
-"""AOPC comprehensiveness eğrisi (appendix): kayıtlı attributions'ı yeniden kullanır,
-sadece [MASK] perturbation geçişlerini koşar. Çıktı: results/aopc_curve.json"""
+"""AOPC comprehensiveness curve: reuses the saved attributions and runs only the
+[MASK] perturbation passes. Writes results/aopc_curve.json."""
 import os, sys, json, time
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"; os.environ["PYTHONIOENCODING"] = "utf-8"
 sys.path.insert(0, r".\src")
@@ -37,4 +37,4 @@ for n, (idx, rec) in enumerate(data.items(), 1):
 
 curve = {m: {str(k): round(float(np.mean(v)), 4) for k, v in acc[m].items()} for m in methods}
 json.dump(curve, open(rf"{ROOT}\results\aopc_curve.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-print("Kaydedildi: results/aopc_curve.json"); print(json.dumps(curve, indent=2))
+print("Saved: results/aopc_curve.json"); print(json.dumps(curve, indent=2))

@@ -59,7 +59,7 @@
   "test_base_rate_label1": 0.528,
   "tfidf_logreg": {
     "macro_f1": 0.786,
-    "note": "head-512 metinde TF-IDF(1-2gram)+LogReg; BERT=0.797 ile kıyas"
+    "note": "head-512 text, TF-IDF (1-2 gram) + LogReg; compare against BERT=0.797"
   },
   "truncation_macroF1": {
     "128": 0.783,

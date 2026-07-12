@@ -1,6 +1,6 @@
-"""Leakage analizi (eleştiri §3.1): (1) keyword cue taraması, (2) TF-IDF+LogReg baseline,
-(3) truncation (128/256/512) macro-F1 eğrisi. Hepsi yerel; GPU gerekmez.
-Çıktı: results/leakage.json"""
+"""Leakage checks: (1) keyword-cue scan, (2) TF-IDF + logistic-regression baseline,
+(3) truncation (128/256/512) macro-F1 curve. All local, CPU only.
+Writes results/leakage.json."""
 import os, sys, json, re, time
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"; os.environ["PYTHONIOENCODING"] = "utf-8"
 sys.path.insert(0, r".\src")
@@ -21,14 +21,14 @@ def head_text(txt, n=512):
     ids = tok(str(txt), truncation=True, max_length=n)["input_ids"]
     return tok.decode(ids, skip_special_tokens=True)
 
-# --- head-512 metinleri (modelin gördüğü pencere) ---
-print("head-512 metinleri hazırlanıyor..."); t0 = time.time()
+# --- head-512 texts (the window the model actually sees) ---
+print("preparing head-512 texts..."); t0 = time.time()
 tr_head = [head_text(t) for t in ds["train"]["text"]]
 te_head = [head_text(t) for t in ds["test"]["text"]]
 tr_y = np.array(ds["train"]["labels"]); te_y = np.array(ds["test"]["labels"])
-print(f"  bitti {time.time()-t0:.0f}s")
+print(f"  done {time.time()-t0:.0f}s")
 
-# --- (1) Keyword cue taraması: cue'lar ilk 512 token içinde ne sıklıkta ve label ile ilişkisi ---
+# --- (1) keyword-cue scan: how often each cue appears in the first 512 tokens and how it relates to the label ---
 cues = ["ihlal edildiğine", "ihlal edilmediğine", "ihlal edilmiştir", "ihlal edilmemiştir",
         "kabul edilemez", "kabul edilebilir", "başvurunun kabul", "oybirliğiyle", "oyçokluğuyla",
         "karar verilmiştir", "tazminat"]
@@ -38,7 +38,7 @@ cue_stats = {}
 for c in cues:
     present = np.array([c in t for t in te_norm])
     p_all = present.mean()
-    # label ile ilişki (present olanlarda label dağılımı)
+    # label distribution among the instances where the cue is present
     if present.sum() > 0:
         p_lab1_given = te_y[present].mean()
     else:
@@ -58,10 +58,10 @@ clf.fit(Xtr, tr_y)
 tfidf_pred = clf.predict(Xte)
 out["tfidf_logreg"] = {
     "macro_f1": round(float(f1_score(te_y, tfidf_pred, average="macro")), 3),
-    "note": "head-512 metinde TF-IDF(1-2gram)+LogReg; BERT=0.797 ile kıyas"}
+    "note": "head-512 text, TF-IDF (1-2 gram) + LogReg; compare against BERT=0.797"}
 print(f"  TF-IDF macro-F1={out['tfidf_logreg']['macro_f1']} ({time.time()-t0:.0f}s)")
 
-# --- (3) Truncation macro-F1 eğrisi (fine-tuned model, CPU inference) ---
+# --- (3) truncation macro-F1 curve (fine-tuned model, CPU inference) ---
 print("truncation inference..."); import torch
 from xai.explainer import load_model_for_xai
 model, _ = load_model_for_xai(MODELDIR, num_labels=2)
@@ -82,4 +82,4 @@ for L in [128, 256, 512]:
     print(f"  L={L}: macro-F1={f} ({time.time()-t0:.0f}s)")
 
 json.dump(out, open(rf"{ROOT}\results\leakage.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-print("\nKaydedildi: results/leakage.json")
+print("\nSaved: results/leakage.json")

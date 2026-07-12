@@ -1,5 +1,5 @@
-"""Nitel ısı haritası (HTML): 2 örnek × 4 yöntem, token'lar önem skoruna göre renkli.
-attributions_pool.json'dan; model gerektirmez."""
+"""Qualitative heatmap (HTML): 2 instances x 4 methods, tokens coloured by
+importance score. Reads attributions_pool.json; no model needed."""
 import os, json, html
 os.environ["PYTHONIOENCODING"] = "utf-8"
 import numpy as np
@@ -7,9 +7,9 @@ import numpy as np
 ROOT = r"."
 data = json.load(open(rf"{ROOT}\results\attributions_pool.json", encoding="utf-8"))
 METHODS = ["raw_attention", "attention_rollout", "integrated_gradients", "chefer_relevance"]
-LABELS = {"raw_attention": "Ham Attention", "attention_rollout": "Attention Rollout",
-          "integrated_gradients": "Integrated Gradients", "chefer_relevance": "Chefer Relevance"}
-NCAP = 70   # gösterilecek ilk token sayısı
+LABELS = {"raw_attention": "Raw attention", "attention_rollout": "Attention rollout",
+          "integrated_gradients": "Integrated Gradients", "chefer_relevance": "Chefer relevance"}
+NCAP = 70   # number of leading tokens to show
 
 def pick(label):
     for idx, rec in data.items():
@@ -22,7 +22,7 @@ def tok_html(t):
 
 def render(idx, rec):
     toks = rec["tokens"][:NCAP]
-    parts = [f'<h3>Örnek idx={idx} — gerçek/pred={rec["true"]} · <span class="haklar">{html.escape(rec["haklar"])}</span></h3>']
+    parts = [f'<h3>Instance idx={idx}: true/pred={rec["true"]} · <span class="rights">{html.escape(rec["haklar"])}</span></h3>']
     for m in METHODS:
         s = np.array(rec["scores"][m][:NCAP], dtype=float)
         spans = []
@@ -48,14 +48,14 @@ h2{{border-bottom:2px solid #333}}
 .name{{flex:0 0 160px;font-family:sans-serif;font-size:13px;font-weight:600;color:#444;text-align:right}}
 .txt{{flex:1;font-size:15px}}
 .txt span{{padding:1px 0;border-radius:2px}}
-.haklar{{font-size:13px;color:#666;font-style:italic}}
+.rights{{font-size:13px;color:#666;font-style:italic}}
 h3{{font-family:sans-serif;font-size:15px;margin-top:28px}}
 .note{{font-family:sans-serif;font-size:13px;color:#666;background:#f5f5f5;padding:10px;border-radius:6px}}
 </style>
-<h2>Türkçe AYM Kararı Sınıflandırması — XAI Isı Haritaları</h2>
-<p class="note">Kırmızı yoğunluğu = tahmin edilen sınıf için token önem skoru (0–1, normalize). İlk {NCAP} token.
-Ham attention'ın noktalama ve yüzeysel token'lara, Chefer/IG'nin anlamlı hukuki terimlere yöneldiğine dikkat.</p>
+<h2>Turkish Constitutional Court decision classification: XAI heatmaps</h2>
+<p class="note">Red intensity = token importance score for the predicted class (0-1, normalised). First {NCAP} tokens.
+Note how raw attention favours punctuation and surface tokens while Chefer and Integrated Gradients focus on meaningful legal terms.</p>
 {"".join(body)}
 """
 open(rf"{ROOT}\results\heatmaps.html", "w", encoding="utf-8").write(htmldoc)
-print("Kaydedildi: results/heatmaps.html")
+print("Saved: results/heatmaps.html")

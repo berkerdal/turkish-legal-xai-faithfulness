@@ -1,6 +1,6 @@
-"""RQ2 — token-tipi atıf analizi. Her yöntem, toplam önem kütlesinin ne kadarını
-hangi token tipine (noktalama / alt-kelime / durak-kelime / sayı / anlamlı içerik) veriyor?
-attributions_pool.json'dan; model gerektirmez."""
+"""Token-type attribution analysis (RQ2). For each method, how much of the total
+importance mass falls on each token type (punctuation / subword / stopword / number /
+content)? Reads attributions_pool.json; no model needed."""
 import os, json, re
 os.environ["PYTHONIOENCODING"] = "utf-8"
 import numpy as np, pandas as pd
@@ -29,14 +29,14 @@ def token_type(t):
 methods = ["raw_attention", "attention_rollout", "integrated_gradients", "chefer_relevance", "random"]
 types = ["content", "punctuation", "subword", "stopword", "number"]
 
-# her örnek için: yöntem×tip kütle payı; sonra örnekler üzerinde ortalama
+# per instance: method x type mass share, then averaged over instances
 per_method = {m: {ty: [] for ty in types} for m in methods}
 for idx, rec in data.items():
     toks = rec["tokens"]
     tt = [token_type(t) for t in toks]
     for m in methods:
         s = np.array(rec["scores"][m], dtype=float)
-        s[[i for i, x in enumerate(tt) if x == "special"]] = 0.0  # özel tokenları çıkar
+        s[[i for i, x in enumerate(tt) if x == "special"]] = 0.0  # drop special tokens
         tot = s.sum()
         if tot <= 0:
             continue
@@ -46,14 +46,14 @@ for idx, rec in data.items():
 
 tbl = pd.DataFrame({m: {ty: round(100 * np.mean(per_method[m][ty]), 1) for ty in types}
                     for m in methods}).T[types]
-print("=== RQ2: Yöntem başına önem kütlesinin token-tipine dağılımı (%) ===")
-print("(özel tokenlar hariç; satır ~100'e toplanır)\n")
+print("=== RQ2: importance mass by token type, per method (%) ===")
+print("(special tokens excluded; rows sum to ~100)\n")
 print(tbl.to_string())
 
-# özet: içerik vs yüzeysel (noktalama+altkelime+durak) oranı
-tbl["yuzeysel(punct+subword+stop)"] = (tbl["punctuation"] + tbl["subword"] + tbl["stopword"]).round(1)
-print("\n--- İçerik vs Yüzeysel ---")
-print(tbl[["content", "yuzeysel(punct+subword+stop)"]].to_string())
+# summary: content vs surface (punctuation + subword + stopword)
+tbl["surface(punct+subword+stop)"] = (tbl["punctuation"] + tbl["subword"] + tbl["stopword"]).round(1)
+print("\n--- content vs surface ---")
+print(tbl[["content", "surface(punct+subword+stop)"]].to_string())
 
 tbl.to_csv(rf"{ROOT}\results\rq2_token_type_shares.csv")
-print("\nKaydedildi: results/rq2_token_type_shares.csv")
+print("\nSaved: results/rq2_token_type_shares.csv")

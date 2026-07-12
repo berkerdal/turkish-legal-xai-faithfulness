@@ -1,5 +1,5 @@
-"""Nihai istatistikler: reps-random'ı entegre et; Friedman chi2 + full pairwise (4 aile) +
-stratum + mean±std. Çıktı: results/final_stats.json"""
+"""Final statistics: integrate the reps-random baseline; Friedman chi2 + full
+pairwise (4 families) + stratum + mean±std. Writes results/final_stats.json."""
 import os, json, itertools
 os.environ["PYTHONIOENCODING"] = "utf-8"
 import numpy as np, pandas as pd
@@ -14,7 +14,7 @@ short = {"raw_attention":"Raw attention","attention_rollout":"Attention rollout"
 idx2strat = raw[raw.method=="raw_attention"].set_index("idx")["stratum"].to_dict()
 rng = np.random.default_rng(3)
 
-# --- reps-random'ı long formata çevir, non-random ile birleştir ---
+# --- reshape reps-random to long format and merge with the non-random results ---
 rr = []
 for _, r in reps.iterrows():
     rr.append({"idx": r["idx"], "stratum": idx2strat[r["idx"]], "method": "random",
@@ -54,7 +54,7 @@ piv2 = data[data.operator=="mask"].pivot_table(index="stratum",columns="method",
 out["stratum_comp_mask"] = {st: {short[m]: round(float(piv2.loc[st,m]),3) for m in methods} for st in piv2.index}
 
 json.dump(out, open(rf"{ROOT}\results\final_stats.json","w",encoding="utf-8"), ensure_ascii=False, indent=2)
-# print özet
+# print summary
 print("=== MEANS (reps-random) ===")
 for k,v in out["means"].items(): print(k, {m:v[m][0] for m in v})
 print("\n=== FRIEDMAN ===")
@@ -65,4 +65,4 @@ for op in ["mask","delete"]:
         if row["pair"]=="Attention rollout - Random": print(f"  comp_{op}:", row)
 print("\n=== stratum comp (mask) ===")
 for st,v in out["stratum_comp_mask"].items(): print(f"  {st}: {v}")
-print("\nKaydedildi: results/final_stats.json")
+print("\nSaved: results/final_stats.json")

@@ -1,5 +1,5 @@
-"""Random baseline'ı 10 bağımsız sıralamayla stabilize et (review §2.1).
-Her instance için comp/suff (mask & delete) 10 tekrar ortalaması. Çıktı: results/random_reps.csv"""
+"""Stabilise the random baseline with 10 independent rankings.
+For each instance, comp/suff (mask & delete) averaged over 10 repetitions. Writes results/random_reps.csv."""
 import os, sys, json, time
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"; os.environ["PYTHONIOENCODING"] = "utf-8"
 sys.path.insert(0, r".\src")
@@ -30,4 +30,4 @@ out.to_csv(rf"{ROOT}\results\random_reps.csv", index=False)
 print("\n=== Random baseline (mean over %d rankings) ===" % REPS)
 for c in ["comp_mask", "comp_delete", "suff_mask", "suff_delete"]:
     print(f"  {c}: {out[c].mean():.4f} ± {out[c].std():.4f}")
-print("Kaydedildi: results/random_reps.csv")
+print("Saved: results/random_reps.csv")
