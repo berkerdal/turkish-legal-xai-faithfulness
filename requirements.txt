@@ -1,5 +1,5 @@
 # Reproducibility environment for
-# "Faithfulness of Post-hoc Explanations for Turkish Legal Judgment Classification in Decision Support"
+# "Faithfulness of Explanations for Turkish Legal Judgment Classification in Decision Support"
 # Python 3.10+ recommended. Training was run on Kaggle (T4/P100 GPU); explanation and
 # faithfulness analysis on CPU.
 
@@ -14,3 +14,9 @@ numpy>=1.24
 matplotlib>=3.7
 huggingface-hub>=0.20
 python-docx>=1.1        # only for manuscript/figure export, not for analysis
+
+# Generative-model (RQ4) fine-tuning and evaluation
+peft>=0.11
+bitsandbytes>=0.43
+accelerate>=0.30
+sentencepiece>=0.2

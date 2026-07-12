@@ -1,9 +1,14 @@
-# Faithfulness of Post-hoc Explanations for Turkish Legal Judgment Classification in Decision Support
+# Faithfulness of Explanations for Turkish Legal Judgment Classification in Decision Support
 
 Code and results for the study comparing the faithfulness of four post-hoc explanation
 methods (raw attention, attention rollout, Integrated Gradients, and Chefer-style
 relevance propagation) on a Turkish BERT classifier fine-tuned to predict rights-violation
 outcomes from Turkish Constitutional Court individual-application decisions.
+
+The same faithfulness measurement is then extended to a generative model (RQ4): a Turkish
+legal large language model is fine-tuned to the same task, and its natural-language
+self-explanation is compared against an occlusion reference and a random baseline with the
+same ERASER-style metrics. The generative-model code lives in `src/llm_pilot/`.
 
 An archived version of this repository (code, results, and a frozen copy of the dataset)
 is deposited at Zenodo: https://doi.org/10.5281/zenodo.21246640
@@ -25,6 +30,12 @@ seed 42). Training is reproduced by `notebooks/train_kaggle.ipynb`. The fine-tun
 is not included here because of its size; it can be regenerated from the notebook or obtained
 from the author on request.
 
+For the generative-model analysis (RQ4), `ytu-ce-cosmos/Turkish-Llama-8b-Instruct-v0.1` is
+fine-tuned to the same classification task with QLoRA (4-bit base, LoRA rank 16), reproduced
+by `notebooks/llm_finetune_kaggle.ipynb`. The self-explanation faithfulness evaluation is run
+by `notebooks/llm_faithfulness_pilot.ipynb`. See `src/llm_pilot/README.md` for the full
+procedure.
+
 ## Contents
 
 ```
@@ -43,9 +54,17 @@ src/xai/                      analysis code
   make_figures_en.py          main-text figures
   make_appendix_figs.py       supplementary figures
   make_aopc_fig.py            perturbation-curve figure
+  make_llm_fig_en.py          generative-model self-explanation figure (RQ4)
+src/llm_pilot/                generative-model analysis (RQ4)
+  llm_finetune.py             QLoRA fine-tuning of the base model
+  llm_faithfulness_pilot.py   self-explanation elicitation and faithfulness evaluation
+  build_pilot_notebook.py     regenerates the Kaggle notebooks from these scripts
+  README.md                   procedure and mapping of outputs to the paper
 notebooks/
   train_kaggle.ipynb          fine-tuning (GPU)
   seed_robustness_kaggle.ipynb  three-seed ranking check (GPU)
+  llm_finetune_kaggle.ipynb   generative-model QLoRA fine-tuning (GPU)
+  llm_faithfulness_pilot.ipynb  generative-model self-explanation evaluation (GPU)
 results/                      computed outputs and figures
   sample_ids.csv              the 60 evaluated test instances (id, stratum, label, prediction, confidence)
   faithfulness_rev_raw.csv    per-instance comprehensiveness and sufficiency
@@ -55,6 +74,7 @@ results/                      computed outputs and figures
   leakage.json                cue prevalence, lexical baseline, truncation macro-F1
   seed_robustness.csv         three-seed comprehensiveness per method
   attributions_rev.json       token-level explanation scores per method
+  llm_perinstance.csv         generative-model per-instance self-explanation faithfulness (RQ4)
   figures/                    PNG figures
 requirements.txt
 ```
@@ -76,14 +96,19 @@ requirements.txt
    pipeline takes a few hours.
 
 4. Generate figures with `src/xai/make_figures_en.py`, `src/xai/make_appendix_figs.py`,
-   and `src/xai/make_aopc_fig.py`.
+   `src/xai/make_aopc_fig.py`, and `src/xai/make_llm_fig_en.py`.
+
+5. For the generative-model analysis (RQ4), follow `src/llm_pilot/README.md`: fine-tune with
+   `notebooks/llm_finetune_kaggle.ipynb`, then evaluate with
+   `notebooks/llm_faithfulness_pilot.ipynb`. The per-instance results are already provided in
+   `results/llm_perinstance.csv`.
 
 The `results/` directory already contains the outputs reported in the paper, so the
 statistics and figures can be regenerated without re-running the model.
 
 ## Citation
 
-Dal, B. Faithfulness of post-hoc explanations for Turkish legal judgment classification in
+Dal, B. Faithfulness of explanations for Turkish legal judgment classification in
 decision support. (Under review.)
 
 ## Licence
